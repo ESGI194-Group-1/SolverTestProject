@@ -32,3 +32,6 @@ This will open a new browser tab with the notebook running. Be aware the Julia a
 to your particular machine when the code is first run after a change. Depending on the code this
 make take some time. Repeated runs then will be fast.
 
+### Working with the notebooks
+Pluto notebooks are reactive, like Excel: if you change a cell, all dependent ones are recalculated.
+You can re-run a cell with "Shift-Enter". 
