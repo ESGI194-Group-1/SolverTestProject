@@ -19,6 +19,11 @@ begin
 
 end
 
+# ╔═╡ 568a1a22-217d-4c3e-a971-2ffec277930e
+md"""
+# Try our simple model
+"""
+
 # ╔═╡ 68f298b8-183c-4180-b9b2-b648ce0e2d67
 Weeks = 1:250
 
@@ -57,7 +62,7 @@ function run(plant::NuclearPlant, L, allowmaintenance)
     p = min(L, plant.maxpower)
     if plant.outagecount == 0
         plant.x = plant.x - plant.burnrate * p
-        if plant.x < 0.5
+        if plant.x < 0.3
             plant.needmaintenance=true
         end
         if plant.needmaintenance && allowmaintenance
@@ -100,7 +105,7 @@ function run(fleet::Fleet,period, demand)
     pfleet = []
     for week in period
         if week==50
-            nuclear[1].needmaintenance=true
+   #         nuclear[1].needmaintenance=true
         end
 
         for day in 1:7
@@ -110,6 +115,7 @@ function run(fleet::Fleet,period, demand)
                 np = 0
                 nC = 0
                 for plant in nuclear
+                    # ensure only one plant can get maintenance
                     allowmaintenance=true
                     for i=1:length(nuclear)
                         if nuclear[i]!==plant && nuclear[i].outagecount>0
@@ -153,18 +159,18 @@ moving_average(vs,n) = [sum(@view vs[i:(i+n-1)])/n for i in 1:(length(vs)-(n-1))
 begin
     n=100
     L=zeros(length(Hours)+n-1)
-    L[1]=4.5
+    L[1]=5
     for h in 2:length(L)
         L[h]=clip(L[h-1]+0.001*randn(),3,5.5)
     end
     L=moving_average(L,n)
 end
 
-# ╔═╡ 578f9d45-02d8-473f-83c4-1c6acf89029b
-#plot(Hours,demand.(Hours))
-
 # ╔═╡ 2da0b9e0-faa3-4e89-b1eb-a8e19cc0f189
 demand(hour) = L[hour] #GW
+
+# ╔═╡ 578f9d45-02d8-473f-83c4-1c6acf89029b
+plot(Hours,demand.(Hours))
 
 # ╔═╡ 27a10bd0-8196-4e8d-9e46-9a431cf9999a
 fleet, p,C = run(Fleet(), Weeks, demand)
@@ -217,6 +223,7 @@ end |> (x)->floataside(x, top=20, width=500)
 
 # ╔═╡ Cell order:
 # ╠═bdee4d8e-e655-497d-9acb-3d23f1a5b68c
+# ╟─568a1a22-217d-4c3e-a971-2ffec277930e
 # ╠═68f298b8-183c-4180-b9b2-b648ce0e2d67
 # ╠═9a468887-f453-42b1-90a3-b888e12f3398
 # ╠═ecedc396-8a6d-4ae6-ab41-e295bbfe3ace
