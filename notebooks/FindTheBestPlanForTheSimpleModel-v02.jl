@@ -222,7 +222,9 @@ moving_average(vs, n) = [sum(@view vs[i:(i + n - 1)]) / n for i in 1:(length(vs)
 md"""
 ### Maintenance plan
 
-Try to create a maintenance plan (``d_{i,t}``) with constraints
+Try to create a maintenance plan (``d_{i,t}``) with constraints using some heuristics and randomness.
+
+__TODO__: Formulate a proper algorithm with all necessary constraints. Explore sparsity of the matrix ``d``
 """
 
 # ╔═╡ 6ed68fbb-97ab-45e5-82fd-3514601a353d
@@ -316,6 +318,11 @@ function findbestplan(L; nrun = 500)
     return bestfleet, Cmin
 end;
 
+# ╔═╡ eac621c4-7f38-4f77-a3e9-06c9debda090
+md"""
+__TODO__: Explore integer programming optimizers. Julia supports [Danzig-Wolfe and Benders decompositions](https://atoptima.github.io/Coluna.jl/dev/man/decomposition/#Dantzig-Wolfe-and-Benders-decompositions) in the package [Coluna.jl](https://github.com/atoptima/Coluna.jl).
+"""
+
 # ╔═╡ 719a32ee-81c4-471f-b2d5-5fdc42dbd221
 md"""
 ### Result plot
@@ -325,6 +332,11 @@ md"""
 md"""
 __Appendix__:
 Package imports
+"""
+
+# ╔═╡ 19df8365-48d1-4ee2-af00-f1b05acb67f6
+md"""
+Trigger buttons
 """
 
 # ╔═╡ fb102bed-b6ae-4689-9fa7-e8e480a2b92e
@@ -447,11 +459,13 @@ floataside(myplot(), top = 375, width = 500)
 # ╟─8154d08a-a965-4919-8c0d-d3bede000bda
 # ╠═52b2aed3-41c9-4570-ac87-1ee2f57de5d9
 # ╠═58241d1e-c4cc-4d9c-8edb-874653b89abc
+# ╟─eac621c4-7f38-4f77-a3e9-06c9debda090
 # ╟─719a32ee-81c4-471f-b2d5-5fdc42dbd221
-# ╠═04fd9413-2160-45f8-9b76-643e460ae303
 # ╠═43d06523-9d98-4f34-a851-b29e5eac5b12
 # ╠═d256357b-a78b-4d4e-b200-c356542def89
 # ╟─a495c8ab-5286-4cd3-b84a-c75efadf7d36
 # ╠═bdee4d8e-e655-497d-9acb-3d23f1a5b68c
+# ╟─19df8365-48d1-4ee2-af00-f1b05acb67f6
+# ╠═04fd9413-2160-45f8-9b76-643e460ae303
 # ╠═fb102bed-b6ae-4689-9fa7-e8e480a2b92e
 # ╟─e209b2a5-36b8-4464-8527-d95fd371ed7c
